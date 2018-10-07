@@ -1,11 +1,24 @@
 <% include partials/header %>
+ <div class="container">
+<h1> This is the matches page.</h1>
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<table>
+   <tr>
+      <th>match_id</th><th>duration</th><th>radiant_win</th>
+   </tr>
 
-<h1> THis is the matches page.</h1>
-<% matches.forEach((matches) => { %>
-   <div>
-   <h4><%= matches.id %> - <%= matches.time %></h4?>
-   <!--<h4><%= matches.time %></h4?>-->
-   </div>
-<% }); %>
+   <% for (var i = 0; i < matches.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
+    <tr>
+      <td><a href = "/matches/<%= matches[i].match_id %>"> <%= matches[i].match_id %> </a></td>
+      <td><%= Math.floor(matches[i].duration / 60) %> m 
+       <%= Math.floor(matches[i].duration % 60) %> s </td>
+      <td><%= matches[i].radiant_win %></td>
+    </tr>    
+   <% } %>
+</table>
+</div>
+</div>
+
+
 
 <% include partials/footer %>

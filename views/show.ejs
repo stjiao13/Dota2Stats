@@ -1,0 +1,41 @@
+<% include partials/header %>
+ <div class="container">
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<table>
+   <tr>
+      <th>match_id</th><th>start_time</th><th>end_time</th>
+   </tr>
+
+   <% for (var i = 0; i < teamfights.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
+    <tr>
+      <td><%= teamfights[i].match_id %></td>
+      <td><%= Math.floor(teamfights[i].start_time / 60) %> m 
+       <%= Math.floor(teamfights[i].start_time % 60) %> s </td>
+      <td><%= Math.floor(teamfights[i].end_time/ 60) %> m 
+       <%= Math.floor(teamfights[i].end_time % 60) %> s </td>
+ 
+    </tr>    
+   <% } %>
+</table>
+</div>
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<table>
+   <tr>
+      <th>match_id</th><th>account_id</th><th>hero_id</th>
+   </tr>
+
+   <% for (var i = 0; i < players.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
+    <tr>
+      <td>
+          <a href = "/purchases/<%= players[i].match_id %>_<%= players[i].player_slot %>"> 
+          <%= players[i].match_id %> </a>
+          <%= players[i].account_id %>
+          </td>
+      <td><%= players[i].hero_id %></td>
+
+    </tr>    
+   <% } %>
+</table>
+</div>
+</div>
+<% include partials/footer %>
