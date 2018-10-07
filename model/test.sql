@@ -1,9 +1,9 @@
-CREATE TABLE employees4 (
-   employee_id   NUMERIC       NOT NULL,
-   first_name    VARCHAR(1000) NOT NULL,
-   last_name     VARCHAR(1000) NOT NULL,
-   date_of_birth DATE                   ,
-   phone_number  VARCHAR(1000) NOT NULL,
-   junk          CHAR(1000)             ,
-   CONSTRAINT employees4_pk PRIMARY KEY (employee_id)
-);
+CREATE TABLE persons
+(
+  id serial NOT NULL,
+  first_name character varying(50),
+  last_name character varying(50),
+  dob date,
+  email character varying(255),
+  CONSTRAINT persons_pkey PRIMARY KEY (id)
+)

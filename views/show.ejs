@@ -37,5 +37,29 @@
    <% } %>
 </table>
 </div>
+
+<div class="well">
+    <div class="text-right">
+            <a class="btn btn-success" href="/matches/<%= teamfights[0].match_id %>/comments/new">Add New Comment</a>
+    </div>
+    <hr>
+    <% comments.forEach(function(comment){ %>
+        <div class="row">
+            <div class="col-md-12">
+                <strong><%= comment.author %></strong>
+                <!--<span class="pull-right">10 days ago</span>-->
+                <p>
+                    <%= comment.content %> 
+                </p>
+                <form style="display: inline" class="pull-right" action="/matches/<%=comment.match_id%>/comments/delete/<%=comment.id%>?_method=DELETE" method="GET">
+                    <button class="btn btn-xs btn-danger">DELETE</button>
+                    <a href="/matches/<%=comment.match_id%>/comments/<%=comment.id%>/edit" class="btn btn-xs btn-info">EDIT</a>
+                </form>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+
 </div>
 <% include partials/footer %>

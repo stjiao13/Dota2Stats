@@ -1,5 +1,5 @@
 # for running sql script
-psql -h ec2-54-225-68-133.compute-1.amazonaws.com  -p 5432 -d dackksvkda5i3v -U lsnkyahhknfvoa -f test.sql
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f test.sql
 
 psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f seed.sql
 
