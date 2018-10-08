@@ -17,7 +17,10 @@ const client = new Client({
   connectionString: connectionString,
   ssl: true,
 });
-
+const pool = new Pool({
+  connectionString: connectionString,
+  ssl: true,
+});
 client.connect();
 
 app.get("/",function(req,res) {
@@ -28,82 +31,57 @@ app.get("/",function(req,res) {
 // get 
 app.get("/matches",function(req,res) {
 
-    // client.query('SELECT * FROM matches;',(err,matches) => {
-    //     if (err) {
-    //         console.log(err.stack);
-    //     } else {
-    //         // console.log(matches.rows);
-    //         res.render("matches",{matches:matches.rows})
-    //     }
-    // });
-    client.query('SELECT * FROM matches;').then(matches => {
+    pool.query('SELECT * FROM matches;').then(matches => {
                     res.render("matches",{matches:matches.rows})
     }).catch(e => console.error(e.stack));
-
+    // pool.end()
 });
 
 app.get("/matches/:id",function(req, res) {
     const text1 = 'select * from teamfights where match_id = ' + req.params.id +';';
     // console.log(req.params.id);
-    client.query(text1).then(teamfights => {
+    pool.query(text1).then(teamfights => {
         const text2 = 'select * from players where match_id = ' + req.params.id +';';
-        client.query(text2).then(players => {
+        pool.query(text2).then(players => {
             const text3 = 'select * from comments where match_id = '+ req.params.id +';';
-            client.query(text3).then(comments => {
-                res.render("show",{
-                    teamfights:teamfights.rows,
-                    players:players.rows,
-                    comments:comments.rows
+            pool.query(text3).then(comments => {
+                const text4 = 'select * from hero_name'
+                pool.query(text4).then(hero_name => {
+                    res.render("show",{
+                        teamfights:teamfights.rows,
+                        players:players.rows,
+                        comments:comments.rows,
+                        hero_name:hero_name.rows
+                    })                    
                 })
+
             })
         })
     }).catch(e => console.error(e.stack))
-    
-    // client.query(text1, (err1,teamfights) => {
-    //     if (err1) {
-    //         console.log(err1.stack);
-    //     } else {
-    //         const text2 = 'select * from players where match_id = ' + req.params.id +';';
-    //         client.query(text2,(err2,players) => {
-    //             if(err2) {
-    //                 console.log(err2.stack);
-    //             }
-    //             else{
-    //                 const text3 = 'select * from comments where match_id = '+ req.params.id +';';
-    //                 client.query(text3,(err3,comments) => {
-    //                     if(err3) {
-    //                         console.log(err3.stack);
-    //                     }
-    //                     else{
-    //                         res.render("show",{
-    //                             teamfights:teamfights.rows,
-    //                             players:players.rows,
-    //                             comments:comments.rows
-    //                         })
-    //                     }
-    //                 })
-    //             }
-    //         })
-            
-    //     }
-    // })
+
     
 })
 app.get("/purchases/:id",function(req, res) {
     const id = req.params.id;
     const arr = id.split('_');
-    const text = 'select * from purchase_log where match_id = ' + arr[0]+' AND player_slot = ' + arr[1];
+    const text1 = 'select * from purchase_log where match_id = ' + arr[0]+' AND player_slot = ' + arr[1];
     
-    client.query(text).then(purchase_log => {
-        res.render("purchases",{purchase_log : purchase_log.rows});
+    pool.query(text1).then(purchase_log => {
+        const text2 = 'select * from item_id;'
+        pool.query(text2).then(item_id => {
+            // console.log(item_id.rows[0])
+            // console.log(item_id.rows[0]['item_name'])
+            const dict = [];
+            item_id.rows.forEach((value) =>{
+                // console.log(value['item_name']);
+                dict[value['id']] = value['item_name'];
+            })
+            // console.log(dict[0])
+            res.render("purchases",{purchase_log : purchase_log.rows,
+                item_id : dict
+            });
+        })
     }).catch(e => console.error(e.stack))
-    // client.query(text,(err,purchase_log) => {
-    //     if(err) {
-    //         console.log(err);
-    //     } else {
-    //         res.render("purchases",{purchase_log : purchase_log.rows});
-    //     }
-    // })
 })
 
 
@@ -123,23 +101,17 @@ app.post("/matches/:id",function(req,res) {
     const values = [id,content,author];
     
     
-    client.query(text,values).then(created => {
+    pool.query(text,values).then(created => {
         res.redirect("/matches/"+id);
     }).catch(e => console.error(e.stack))
-    // client.query(text,values,function(err,created) {
-    //     if (err) {
-    //         console.log(err.stack);
-    //     } else {
-    //         res.redirect("/matches/"+req.params.id);
-    //     }
-    // })
+
     
 })
 
 //delete
 app.get("/matches/:id/comments/delete/:commentId",function(req,res) {
     const text = 'delete from comments where id = ' + req.params.commentId;
-    client.query(text).then(success => {
+    pool.query(text).then(success => {
         res.redirect("/matches/" + req.params.id)
     }).catch(e => console.error(e.stack))
 }) 
@@ -147,9 +119,7 @@ app.get("/matches/:id/comments/delete/:commentId",function(req,res) {
 
 app.get("/matches/:id/comments/:commentId/edit",function(req,res) {
     const text = 'select * from comments where id = '+ req.params.commentId +';';
-    // console.log(text);
-    client.query(text).then(comment => {
-        // console.log(comment.rows[0]);
+    pool.query(text).then(comment => {
         res.render("edit",{comment : comment.rows[0]});
     }).catch(e => console.error(e.stack))
 
@@ -162,9 +132,8 @@ app.post("/matches/:id/comments/:commentId",function(req, res) {
     console.log("called!!!!!!!!")
     
     const text = 'UPDATE comments SET content = \'' + updatedContent +'\' WHERE id = ' + commentId +';';
-    // const values = [updatedContent,commentId];
     console.log(text);
-    client.query(text).then(success => {
+    pool.query(text).then(success => {
         res.redirect("/matches/" + matchId);
     }).catch(e => console.error(e.stack))
 })

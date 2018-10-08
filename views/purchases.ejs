@@ -3,14 +3,13 @@
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 <table>
    <tr>
-      <th>item_id</th><th>time</th><th>player_slot</th>
+      <th>item_name</th><th>time</th>
    </tr>
 
    <% for (var i = 0; i <purchase_log.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
     <tr>
-      <td><%= purchase_log[i].item_id %></td>
+      <td><%= item_id[purchase_log[i].item_id] %></td>
       <td><%= purchase_log[i].time %></td>
-      <td><%= purchase_log[i].player_slot %></td>
 
     </tr>    
    <% } %>

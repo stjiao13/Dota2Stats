@@ -21,17 +21,16 @@
      <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 <table>
    <tr>
-      <th>match_id</th><th>account_id</th><th>hero_id</th>
+      <th>account_id</th><th>hero_name</th>
    </tr>
 
    <% for (var i = 0; i < players.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
     <tr>
       <td>
           <a href = "/purchases/<%= players[i].match_id %>_<%= players[i].player_slot %>"> 
-          <%= players[i].match_id %> </a>
-          <%= players[i].account_id %>
+          <%= players[i].account_id %> </a>
           </td>
-      <td><%= players[i].hero_id %></td>
+      <td><%= hero_name[players[i].hero_id - 1]['localized_name'] %></td>
 
     </tr>    
    <% } %>
