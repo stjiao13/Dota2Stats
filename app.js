@@ -12,6 +12,7 @@ const { Pool, Client } = require('pg')
 const connectionString = "postgres://qgoyzerrrddgkd:115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7@ec2-54-83-27-165.compute-1.amazonaws.com:5432/d7pgeu1vs3a7r";
 const router = express.Router();
 const matches = [];
+var sort_status = [];
 
 const client = new Client({
   connectionString: connectionString,
@@ -36,6 +37,38 @@ app.get("/matches",function(req,res) {
     }).catch(e => console.error(e.stack));
     // pool.end()
 });
+
+app.get("/matches/sort/:cond",function(req, res) {
+    const cond = req.params.cond;
+    console.log(cond);
+    if(sort_status[cond] === undefined) {
+        sort_status[cond] = true;
+    }
+    else {
+        sort_status[cond] = !sort_status[cond];
+    }
+    var text;
+    if (cond === 'byId') {
+        text = 'select * from matches order by match_id ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+    } 
+    else if (cond === 'byDuration' )  {
+        text = 'select * from matches order by duration ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+    }
+    else if (cond === 'byTower') {
+        text = 'select * from matches order by (tower_status_radiant - tower_status_dire) ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+    }
+    else if (cond === 'byBarrack') {
+        text = 'select * from matches order by (barracks_status_radiant - barracks_status_dire) ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+    }
+    else if (cond === 'byWin') {
+        text = 'select * from matches order by radiant_win ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+    }
+    console.log(text);
+
+    pool.query(text).then(matches => {
+                    res.render("matches",{matches:matches.rows})
+    }).catch(e => console.error(e.stack));
+}) 
 
 app.get("/matches/:id",function(req, res) {
     const text1 = 'select * from teamfights where match_id = ' + req.params.id +';';

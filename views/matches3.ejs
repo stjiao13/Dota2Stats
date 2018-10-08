@@ -1,10 +1,9 @@
 <% include partials/header %>
-<div class="container">
+ <div class="container">
 <h1> This is the matches page.</h1>
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-<table class="table table-striped">
-<thead>
-    <tr>
+<table>
+   <tr>
       <th>
           <a href = "/matches/sort/byId">Match Id</a>
           </th>
@@ -19,18 +18,17 @@
           </th>
       <th>                    
           <a href = "/matches/sort/byWin">Radiant Win</a>
-      </th>
-    </tr>
-</thead>
+          </th>      
+   </tr>
 
-  <tbody>
-    <% for (var i = 0; i < matches.length; i++) { %>
+   <% for (var i = 0; i < matches.length; i++) { %>
     <tr>
-      <th scopr = 'row'>
+      <td>
         <a href = "/matches/<%= matches[i].match_id %>"> <%= matches[i].match_id %> </a>
-      </th>
-      <td><%= Math.floor(matches[i].duration / 60) %> m 
-       <%= Math.floor(matches[i].duration % 60) %> s </td>
+        </td>
+      <td>
+        <%= Math.floor(matches[i].duration / 60) %> m 
+        <%= Math.floor(matches[i].duration % 60) %> s </td>
        <td>
            <%=matches[i].tower_status_radiant %> - 
            <%=matches[i].tower_status_dire %>
@@ -39,11 +37,11 @@
            <%=matches[i].barracks_status_radiant %> - 
            <%=matches[i].barracks_status_dire %>
        </td>
-        <td><%= matches[i].radiant_win %></td>
-    </tr>
-    <% } %>
-  </tbody>
-
+      <td>
+        <%= matches[i].radiant_win %>
+        </td>
+    </tr>    
+   <% } %>
 </table>
 </div>
 </div>

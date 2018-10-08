@@ -1,18 +1,24 @@
 <% include partials/header %>
 <div class="container">
 <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-<table>
+<table class="table table-striped">
+<thead>
    <tr>
       <th>item_name</th><th>time</th>
    </tr>
+</thead>
 
-   <% for (var i = 0; i <purchase_log.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
+<tbody>
+   <% for (var i = 0; i <purchase_log.length; i++) { %>
     <tr>
       <td><%= item_id[purchase_log[i].item_id] %></td>
-      <td><%= purchase_log[i].time %></td>
+      <td><%= Math.floor(purchase_log[i].time / 60) %> m 
+       <%= Math.floor(purchase_log[i].time  % 60) %> s </td>
 
     </tr>    
    <% } %>
+   
+</tbody>
 </table>
 </div>
 </div>

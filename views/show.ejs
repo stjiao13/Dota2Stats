@@ -1,39 +1,83 @@
 <% include partials/header %>
  <div class="container">
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-<table>
-   <tr>
-      <th>match_id</th><th>start_time</th><th>end_time</th>
-   </tr>
+<h3 style = 'text-align: center;'> Team Fight Stats</h3>         
 
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<table class="table table-striped">
+<thead>
+   <tr>
+      <th>Match Id</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Death</th>
+   </tr>
+</thead>
+
+<tbody>
    <% for (var i = 0; i < teamfights.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
     <tr>
-      <td><%= teamfights[i].match_id %></td>
+    <th scope = 'row'>
+      <%= teamfights[i].match_id %>
+      </th>
       <td><%= Math.floor(teamfights[i].start_time / 60) %> m 
-       <%= Math.floor(teamfights[i].start_time % 60) %> s </td>
+       <%= Math.floor(teamfights[i].start_time % 60) %> s 
+       </td>
       <td><%= Math.floor(teamfights[i].end_time/ 60) %> m 
-       <%= Math.floor(teamfights[i].end_time % 60) %> s </td>
+       <%= Math.floor(teamfights[i].end_time % 60) %> s 
+       </td>
+      <td>
+          <%= teamfights[i].death %>
+      </td>
  
     </tr>    
    <% } %>
+</tbody>
+   
 </table>
-</div>
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
-<table>
-   <tr>
-      <th>account_id</th><th>hero_name</th>
-   </tr>
 
+</div>
+<h3 style = 'text-align: center' > Player Stats</h3>    
+
+     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<table class="table table-striped">
+   <thead>
+   <tr>
+      <th>Account Id</th>
+      <th>Hero Name</th>
+      <th>Player Slot</th>
+      <th>Gold</th>
+      <th>Gold Per Minute</th>
+      <th>Exp Per Minute</th>
+      <th>Kills</th>
+      <th>Assists</th>
+      <th>Hero Damage</th>
+      <th>Level</th>
+      <!--<th>Exp Per Minute</th>-->
+     
+   </tr>
+   </thead>
+
+   <tbody>
    <% for (var i = 0; i < players.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
     <tr>
-      <td>
+      <th scope = 'row'>
           <a href = "/purchases/<%= players[i].match_id %>_<%= players[i].player_slot %>"> 
           <%= players[i].account_id %> </a>
-          </td>
+          </th>
       <td><%= hero_name[players[i].hero_id - 1]['localized_name'] %></td>
+      <td><%= players[i].player_slot %></td>
+      <td><%= players[i].gold %></td>
+      <td><%= players[i].gold_per_min %></td>
+      <td><%= players[i].xp_per_min %></td>
+      <td><%= players[i].kills %></td>
+      <td><%= players[i].assists %></td>
+      <td><%= players[i].hero_damage %></td>
+      <td><%= players[i].level %></td>
+
 
     </tr>    
    <% } %>
+   </tbody>
 </table>
 </div>
 
