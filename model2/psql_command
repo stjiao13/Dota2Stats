@@ -1,0 +1,16 @@
+# for running sql script
+psql -h ec2-54-225-68-133.compute-1.amazonaws.com  -p 5432 -d dackksvkda5i3v -U lsnkyahhknfvoa -f test.sql
+
+psql -h ec2-54-225-68-133.compute-1.amazonaws.com  -p 5432 -d dackksvkda5i3v -U lsnkyahhknfvoa -f seed.sql
+
+psql -h ec2-54-225-68-133.compute-1.amazonaws.com  -p 5432 -d dackksvkda5i3v -U lsnkyahhknfvoa -f purchase_log.sql
+
+# password
+5465e49f9d8cc79c2398324b61fa4ae81a14e2758c64ad912ebc8b0e3687d2bc
+
+# copy from a csv
+PGPASSWORD=5465e49f9d8cc79c2398324b61fa4ae81a14e2758c64ad912ebc8b0e3687d2bc psql -h ec2-54-225-68-133.compute-1.amazonaws.com -U lsnkyahhknfvoa dackksvkda5i3v -c "\copy persons(first_name,last_name) FROM 'persons.csv' DELIMITER ',' CSV HEADER;"
+
+PGPASSWORD=5465e49f9d8cc79c2398324b61fa4ae81a14e2758c64ad912ebc8b0e3687d2bc psql -h ec2-54-225-68-133.compute-1.amazonaws.com -U lsnkyahhknfvoa dackksvkda5i3v -c "\copy item_id FROM 'item_ids.csv' DELIMITER ',' CSV HEADER;"
+
+PGPASSWORD=5465e49f9d8cc79c2398324b61fa4ae81a14e2758c64ad912ebc8b0e3687d2bc psql -h ec2-54-225-68-133.compute-1.amazonaws.com -U lsnkyahhknfvoa dackksvkda5i3v -c "\copy purchase_log FROM 'purchase_log.csv' DELIMITER ',' CSV HEADER;"

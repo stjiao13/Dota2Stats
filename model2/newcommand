@@ -1,0 +1,33 @@
+# for running sql script
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f test.sql
+
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f seed.sql
+
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f purchase_log.sql
+
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f matches.sql
+
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f players.sql
+
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f hero_names.sql
+
+psql -h ec2-54-83-27-165.compute-1.amazonaws.com  -p 5432 -d d7pgeu1vs3a7r -U qgoyzerrrddgkd -f teamfights.sql
+
+# password
+115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7
+
+# copy from a csv
+
+$ PGPASSWORD=PWHERE psql -h HOSTHERE -U USERHERE DBNAMEHERE -c "\copy my_things FROM 'my_data.csv' WITH CSV;"
+
+PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy item_id FROM 'item_ids.csv' DELIMITER ',' CSV HEADER;"
+
+PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy purchase_log FROM 'purchase_log.csv' DELIMITER ',' CSV HEADER;"
+
+PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy matches FROM 'matches.csv' DELIMITER ',' CSV HEADER;"
+
+PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy players FROM 'players.csv' DELIMITER ',' CSV HEADER;"
+
+PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy hero_name FROM 'hero_names.csv' DELIMITER ',' CSV HEADER;"
+
+PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy teamfights FROM 'teamfights.csv' DELIMITER ',' CSV HEADER;"
