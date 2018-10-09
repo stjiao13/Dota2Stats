@@ -1,7 +1,8 @@
 var express = require("express");
 var app = express();
 var bodyParser  = require("body-parser");
-var connection = require("./connection")
+// module for database info like password and will be ignored for public github account
+var connection = require("./connection");
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
@@ -10,7 +11,6 @@ app.set("view engine","ejs");
 
 
 const { Pool, Client } = require('pg')
-// const connectionString = "postgres://qgoyzerrrddgkd:115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7@ec2-54-83-27-165.compute-1.amazonaws.com:5432/d7pgeu1vs3a7r";
 const connectionString = connection.uri;
 const router = express.Router();
 const matches = [];
@@ -56,14 +56,13 @@ app.get("/matches",function(req,res) {
 
 app.get("/matches/sort/:cond",function(req, res) {
     const cond = req.params.cond;
-    // console.log(cond);
     if(sort_status[cond] === undefined) {
         sort_status[cond] = true;
     }
     else {
         sort_status[cond] = !sort_status[cond];
     }
-    var text;
+    var text = 'SELECT * FROM matches'
     if (cond === 'byId') {
         text = 'SELECT * FROM matches ORDER BY match_id ' + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
     } 
@@ -79,7 +78,6 @@ app.get("/matches/sort/:cond",function(req, res) {
     else if (cond === 'byWin') {
         text = 'SELECT * FROM matches ORDER BY radiant_win ' + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
     }
-    console.log(text);
 
     pool.query(text).then(matches => {
                     res.render("matches",{matches:matches.rows})
@@ -88,8 +86,7 @@ app.get("/matches/sort/:cond",function(req, res) {
 
 app.get("/matches_sorted/:id/:table/:cond",function(req, res) {
     const cond = req.params.cond;
-    // console.log(cond);
-    // console.log(req.params.table)
+
     if(sort_status[cond] === undefined) {
         sort_status[cond] = true;
     }
@@ -108,17 +105,13 @@ app.get("/matches_sorted/:id/:table/:cond",function(req, res) {
     else {
         var text2 = 'SELECT * FROM players WHERE match_id = ' + req.params.id +';';
     }
-    // console.log(text2)
 
     const text3 = 'SELECT * FROM comments WHERE match_id = '+ req.params.id +';';
     const text4 = 'SELECT * FROM hero_name'
 
     pool.query(text1).then(teamfights => {
-        // const text2 = 'SELECT * FROM players WHERE match_id = ' + req.params.id +';';
         pool.query(text2).then(players => {
-            // const text3 = 'SELECT * FROM comments WHERE match_id = '+ req.params.id +';';
             pool.query(text3).then(comments => {
-                // const text4 = 'SELECT * FROM hero_name'
                 pool.query(text4).then(hero_name => {
                     res.render("show",{
                         teamfights:teamfights.rows,
@@ -131,12 +124,10 @@ app.get("/matches_sorted/:id/:table/:cond",function(req, res) {
             })
         })
     }).catch(e => console.error(e.stack))
-    // res.redirect("/matches/")
 })
 
 app.get("/matches/:id",function(req, res) {
     const text1 = 'SELECT * FROM teamfights WHERE match_id = ' + req.params.id +';';
-    // console.log(req.params.id);
     pool.query(text1).then(teamfights => {
         const text2 = 'SELECT * FROM players WHERE match_id = ' + req.params.id +';';
         pool.query(text2).then(players => {
@@ -166,14 +157,11 @@ app.get("/purchases/:id",function(req, res) {
     pool.query(text1).then(purchase_log => {
         const text2 = 'SELECT * FROM item_id;'
         pool.query(text2).then(item_id => {
-            // console.log(item_id.rows[0])
-            // console.log(item_id.rows[0]['item_name'])
+
             const dict = [];
             item_id.rows.forEach((value) =>{
-                // console.log(value['item_name']);
                 dict[value['id']] = value['item_name'];
             })
-            // console.log(dict[0])
             res.render("purchases",{purchase_log : purchase_log.rows,
                 item_id : dict
             });
@@ -187,13 +175,11 @@ app.get("/matches/:id/comments/new",function(req, res) {
 })
 
 app.post("/matches/:id",function(req,res) {
-    // console.log(req.body);
-    // console.log(req.body.comment.content);
+
     
     const id = req.params.id;
     const content = req.body.comment.content;
     const author = req.body.comment.author;
-    // const text = 'INSERT INTO comments (match_id, content, author) VALUES ( \'' + id +
     const text = 'INSERT INTO comments (match_id, content, author) VALUES ($1,$2,$3)'
     const values = [id,content,author];
     
@@ -226,8 +212,7 @@ app.post("/matches/:id/comments/:commentId",function(req, res) {
     const commentId = req.params.commentId;
     const matchId = req.params.id;
     const updatedContent = req.body.comment.content;
-    console.log("called!!!!!!!!")
-    
+
     const text = 'UPDATE comments SET content = \'' + updatedContent +'\' WHERE id = ' + commentId +';';
     console.log(text);
     pool.query(text).then(success => {
@@ -238,6 +223,5 @@ app.post("/matches/:id/comments/:commentId",function(req, res) {
 
 app.listen(process.env.PORT,process.env.IP,() =>{
     console.log("started");
-    console.log(connection.host);
 });
 

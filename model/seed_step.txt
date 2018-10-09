@@ -1,0 +1,18 @@
+The database seeding steps are :
+1) Create related tables ;
+2) Import data from csv file use 'copy' command
+
+# cli commands for first step
+    psql -h MYHOST  -p MYPORT -d MYDATABASE -U MYUSERNAME -f SQLSCRIPT
+    
+The sql scripts are located sql_script folder
+
+
+# password
+115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7
+
+# cli commands for importing data from csv file
+
+$ PGPASSWORD=PWHERE psql -h HOSTHERE -U USERHERE DBNAMEHERE -c "\copy my_things FROM 'my_data.csv' WITH CSV;"
+
+The csv files are located in data folder

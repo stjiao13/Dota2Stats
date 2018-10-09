@@ -4,5 +4,6 @@ CREATE TABLE comments
   match_id serial NOT NULL,
   content text,
   author character varying(50),
-  PRIMARY KEY (id)
+  PRIMARY KEY (id),
+  CONSTRAINT constraint_fk1 FOREIGN KEY (match_id) REFERENCES matches(match_id)
 )
