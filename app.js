@@ -16,16 +16,18 @@ const router = express.Router();
 const matches = [];
 var sort_status = [];
 
-const client = new Client({
-  connectionString: connectionString,
-  ssl: true,
-});
+// const client = new Client({
+//   connectionString: connectionString,
+//   ssl: true,
+// });
 const pool = new Pool({
   connectionString: connectionString,
   ssl: true,
 });
-client.connect();
+// client.connect();
 
+
+// get route for landing page
 app.get("/",function(req,res) {
     var prefix = 'SELECT COUNT(*) FROM ';
     pool.query(prefix + 'matches;').then(matchesCount => {
@@ -46,7 +48,7 @@ app.get("/",function(req,res) {
     }).catch(e => console.error(e.stack));
 });
 
-// get 
+// get route for matches page
 app.get("/matches",function(req,res) {
 
     pool.query('SELECT * FROM matches;').then(matches => {
@@ -84,6 +86,7 @@ app.get("/matches/sort/:cond",function(req, res) {
     }).catch(e => console.error(e.stack));
 }) 
 
+// get route for show page after sorting
 app.get("/matches_sorted/:id/:table/:cond",function(req, res) {
     const cond = req.params.cond;
 
@@ -126,6 +129,7 @@ app.get("/matches_sorted/:id/:table/:cond",function(req, res) {
     }).catch(e => console.error(e.stack))
 })
 
+// get route for show page
 app.get("/matches/:id",function(req, res) {
     const text1 = 'SELECT * FROM teamfights WHERE match_id = ' + req.params.id +';';
     pool.query(text1).then(teamfights => {
@@ -148,7 +152,7 @@ app.get("/matches/:id",function(req, res) {
     }).catch(e => console.error(e.stack))
 })
 
-
+// get route for purchase page
 app.get("/purchases/:id",function(req, res) {
     const id = req.params.id;
     const arr = id.split('_');
@@ -169,11 +173,12 @@ app.get("/purchases/:id",function(req, res) {
     }).catch(e => console.error(e.stack))
 })
 
-
+// get route for purchase page
 app.get("/matches/:id/comments/new",function(req, res) {
    res.render("newcomment",{id:req.params.id});
 })
 
+// post route for creating new comments
 app.post("/matches/:id",function(req,res) {
 
     
@@ -191,7 +196,7 @@ app.post("/matches/:id",function(req,res) {
     
 })
 
-//delete
+//get route for deleting comments
 app.get("/matches/:id/comments/delete/:commentId",function(req,res) {
     const text = 'delete FROM comments WHERE id = ' + req.params.commentId;
     pool.query(text).then(success => {
@@ -199,16 +204,15 @@ app.get("/matches/:id/comments/delete/:commentId",function(req,res) {
     }).catch(e => console.error(e.stack))
 }) 
 
-
+// get route for comment edit page
 app.get("/matches/:id/comments/:commentId/edit",function(req,res) {
     const text = 'SELECT * FROM comments WHERE id = '+ req.params.commentId +';';
     pool.query(text).then(comment => {
-        console.log(comment.rows[0])
         res.render("edit",{comment : comment.rows[0]});
     }).catch(e => console.error(e.stack))
 
 })
-
+// post route for updating existing comments
 app.post("/matches/:id/comments/:commentId",function(req, res) {
     const commentId = req.params.commentId;
     const matchId = req.params.id;
