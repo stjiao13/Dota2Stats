@@ -203,6 +203,7 @@ app.get("/matches/:id/comments/delete/:commentId",function(req,res) {
 app.get("/matches/:id/comments/:commentId/edit",function(req,res) {
     const text = 'SELECT * FROM comments WHERE id = '+ req.params.commentId +';';
     pool.query(text).then(comment => {
+        console.log(comment.rows[0])
         res.render("edit",{comment : comment.rows[0]});
     }).catch(e => console.error(e.stack))
 
