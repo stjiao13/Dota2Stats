@@ -25,8 +25,23 @@ const pool = new Pool({
 client.connect();
 
 app.get("/",function(req,res) {
-    // res.render("home");
-    res.render("landing");
+    var prefix = 'SELECT COUNT(*) FROM ';
+    pool.query(prefix + 'matches;').then(matchesCount => {
+        pool.query(prefix + 'players;').then(playersCount => {
+            pool.query(prefix + 'teamfights;').then(teamfightsCount => {
+                pool.query(prefix + 'purchase_log;').then(purchasesCount => {
+                    
+                    res.render("landing",{
+                        matchesCount : matchesCount.rows[0].count,
+                        playersCount : playersCount.rows[0].count,
+                        teamfightsCount : teamfightsCount.rows[0].count,
+                        purchasesCount : purchasesCount.rows[0].count
+                    });
+
+                })
+            })
+        })
+    }).catch(e => console.error(e.stack));
 });
 
 // get 
@@ -35,12 +50,11 @@ app.get("/matches",function(req,res) {
     pool.query('SELECT * FROM matches;').then(matches => {
                     res.render("matches",{matches:matches.rows})
     }).catch(e => console.error(e.stack));
-    // pool.end()
 });
 
 app.get("/matches/sort/:cond",function(req, res) {
     const cond = req.params.cond;
-    console.log(cond);
+    // console.log(cond);
     if(sort_status[cond] === undefined) {
         sort_status[cond] = true;
     }
@@ -49,19 +63,19 @@ app.get("/matches/sort/:cond",function(req, res) {
     }
     var text;
     if (cond === 'byId') {
-        text = 'select * from matches order by match_id ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+        text = 'SELECT * FROM matches ORDER BY match_id ' + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
     } 
     else if (cond === 'byDuration' )  {
-        text = 'select * from matches order by duration ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+        text = 'SELECT * FROM matches ORDER BY duration ' + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
     }
     else if (cond === 'byTower') {
-        text = 'select * from matches order by (tower_status_radiant - tower_status_dire) ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+        text = 'SELECT * FROM matches ORDER BY (tower_status_radiant - tower_status_dire) ' + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
     }
     else if (cond === 'byBarrack') {
-        text = 'select * from matches order by (barracks_status_radiant - barracks_status_dire) ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+        text = 'SELECT * FROM matches ORDER BY (barracks_status_radiant - barracks_status_dire) ' + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
     }
     else if (cond === 'byWin') {
-        text = 'select * from matches order by radiant_win ' + (sort_status[cond] ? ' asc ;' : ' desc ;');
+        text = 'SELECT * FROM matches ORDER BY radiant_win ' + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
     }
     console.log(text);
 
@@ -70,15 +84,39 @@ app.get("/matches/sort/:cond",function(req, res) {
     }).catch(e => console.error(e.stack));
 }) 
 
-app.get("/matches/:id",function(req, res) {
-    const text1 = 'select * from teamfights where match_id = ' + req.params.id +';';
-    // console.log(req.params.id);
+app.get("/matches_sorted/:id/:table/:cond",function(req, res) {
+    const cond = req.params.cond;
+    // console.log(cond);
+    // console.log(req.params.table)
+    if(sort_status[cond] === undefined) {
+        sort_status[cond] = true;
+    }
+    else {
+        sort_status[cond] = !sort_status[cond];
+    }
+    if (req.params.table == 'sortByTeamfights') {
+        var text1 = 'SELECT * FROM teamfights WHERE match_id = ' + req.params.id + ' ORDER BY ' + cond + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
+    }
+    else {
+        var text1 = 'SELECT * FROM teamfights WHERE match_id = ' + req.params.id +';';
+    }
+    if (req.params.table == 'sortByPlayers') {
+        var text2 = 'SELECT * FROM players WHERE match_id = ' + req.params.id + ' ORDER BY ' + cond + (sort_status[cond] ? ' ASC ;' : ' DESC ;');
+    }
+    else {
+        var text2 = 'SELECT * FROM players WHERE match_id = ' + req.params.id +';';
+    }
+    // console.log(text2)
+
+    const text3 = 'SELECT * FROM comments WHERE match_id = '+ req.params.id +';';
+    const text4 = 'SELECT * FROM hero_name'
+
     pool.query(text1).then(teamfights => {
-        const text2 = 'select * from players where match_id = ' + req.params.id +';';
+        // const text2 = 'SELECT * FROM players WHERE match_id = ' + req.params.id +';';
         pool.query(text2).then(players => {
-            const text3 = 'select * from comments where match_id = '+ req.params.id +';';
+            // const text3 = 'SELECT * FROM comments WHERE match_id = '+ req.params.id +';';
             pool.query(text3).then(comments => {
-                const text4 = 'select * from hero_name'
+                // const text4 = 'SELECT * FROM hero_name'
                 pool.query(text4).then(hero_name => {
                     res.render("show",{
                         teamfights:teamfights.rows,
@@ -91,16 +129,40 @@ app.get("/matches/:id",function(req, res) {
             })
         })
     }).catch(e => console.error(e.stack))
-
-    
+    // res.redirect("/matches/")
 })
+
+app.get("/matches/:id",function(req, res) {
+    const text1 = 'SELECT * FROM teamfights WHERE match_id = ' + req.params.id +';';
+    // console.log(req.params.id);
+    pool.query(text1).then(teamfights => {
+        const text2 = 'SELECT * FROM players WHERE match_id = ' + req.params.id +';';
+        pool.query(text2).then(players => {
+            const text3 = 'SELECT * FROM comments WHERE match_id = '+ req.params.id +';';
+            pool.query(text3).then(comments => {
+                const text4 = 'SELECT * FROM hero_name'
+                pool.query(text4).then(hero_name => {
+                    res.render("show",{
+                        teamfights:teamfights.rows,
+                        players:players.rows,
+                        comments:comments.rows,
+                        hero_name:hero_name.rows
+                    })                    
+                })
+
+            })
+        })
+    }).catch(e => console.error(e.stack))
+})
+
+
 app.get("/purchases/:id",function(req, res) {
     const id = req.params.id;
     const arr = id.split('_');
-    const text1 = 'select * from purchase_log where match_id = ' + arr[0]+' AND player_slot = ' + arr[1];
+    const text1 = 'SELECT * FROM purchase_log WHERE match_id = ' + arr[0]+' AND player_slot = ' + arr[1];
     
     pool.query(text1).then(purchase_log => {
-        const text2 = 'select * from item_id;'
+        const text2 = 'SELECT * FROM item_id;'
         pool.query(text2).then(item_id => {
             // console.log(item_id.rows[0])
             // console.log(item_id.rows[0]['item_name'])
@@ -143,7 +205,7 @@ app.post("/matches/:id",function(req,res) {
 
 //delete
 app.get("/matches/:id/comments/delete/:commentId",function(req,res) {
-    const text = 'delete from comments where id = ' + req.params.commentId;
+    const text = 'delete FROM comments WHERE id = ' + req.params.commentId;
     pool.query(text).then(success => {
         res.redirect("/matches/" + req.params.id)
     }).catch(e => console.error(e.stack))
@@ -151,7 +213,7 @@ app.get("/matches/:id/comments/delete/:commentId",function(req,res) {
 
 
 app.get("/matches/:id/comments/:commentId/edit",function(req,res) {
-    const text = 'select * from comments where id = '+ req.params.commentId +';';
+    const text = 'SELECT * FROM comments WHERE id = '+ req.params.commentId +';';
     pool.query(text).then(comment => {
         res.render("edit",{comment : comment.rows[0]});
     }).catch(e => console.error(e.stack))
@@ -174,5 +236,6 @@ app.post("/matches/:id/comments/:commentId",function(req, res) {
 
 app.listen(process.env.PORT,process.env.IP,() =>{
     console.log("started");
+    console.log(process.env.HOST);
 });
 

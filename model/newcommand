@@ -22,7 +22,7 @@ $ PGPASSWORD=PWHERE psql -h HOSTHERE -U USERHERE DBNAMEHERE -c "\copy my_things 
 
 PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy item_id FROM 'item_ids.csv' DELIMITER ',' CSV HEADER;"
 
-PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy purchase_log FROM 'purchase_log.csv' DELIMITER ',' CSV HEADER;"
+PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy purchase_log FROM 'purchase_log_more.csv' DELIMITER ',' CSV HEADER;"
 
 PGPASSWORD=115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7 psql -h ec2-54-83-27-165.compute-1.amazonaws.com -U qgoyzerrrddgkd d7pgeu1vs3a7r -c "\copy matches FROM 'matches.csv' DELIMITER ',' CSV HEADER;"
 

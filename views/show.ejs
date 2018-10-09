@@ -1,57 +1,30 @@
 <% include partials/header %>
  <div class="container">
-<h3 style = 'text-align: center;'> Team Fight Stats</h3>         
-
-<div class="row text-center" style="display:flex; flex-wrap: wrap;">
-<table class="table table-striped">
-<thead>
-   <tr>
-      <th>Match Id</th>
-      <th>Start Time</th>
-      <th>End Time</th>
-      <th>Death</th>
-   </tr>
-</thead>
-
-<tbody>
-   <% for (var i = 0; i < teamfights.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
-    <tr>
-    <th scope = 'row'>
-      <%= teamfights[i].match_id %>
-      </th>
-      <td><%= Math.floor(teamfights[i].start_time / 60) %> m 
-       <%= Math.floor(teamfights[i].start_time % 60) %> s 
-       </td>
-      <td><%= Math.floor(teamfights[i].end_time/ 60) %> m 
-       <%= Math.floor(teamfights[i].end_time % 60) %> s 
-       </td>
-      <td>
-          <%= teamfights[i].death %>
-      </td>
- 
-    </tr>    
-   <% } %>
-</tbody>
-   
-</table>
-
-</div>
 <h3 style = 'text-align: center' > Player Stats</h3>    
-
-     <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
 <table class="table table-striped">
    <thead>
    <tr>
-      <th>Account Id</th>
-      <th>Hero Name</th>
-      <th>Player Slot</th>
-      <th>Gold</th>
-      <th>Gold Per Minute</th>
-      <th>Exp Per Minute</th>
-      <th>Kills</th>
-      <th>Assists</th>
-      <th>Hero Damage</th>
-      <th>Level</th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/account_id"> Account Id
+         </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/hero_id">Hero Name
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/player_slot">Player Slot
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/gold">Gold
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/gold_per_min">Gold Per Minute
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/xp_per_min">Exp Per Minute
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/kills">Kills
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/assists">Assists
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/hero_damage">Hero Damage
+      </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByPlayers/level">Level
+      </a></th>
       <!--<th>Exp Per Minute</th>-->
      
    </tr>
@@ -80,6 +53,52 @@
    </tbody>
 </table>
 </div>
+    
+    
+    
+<h3 style = 'text-align: center;'> Team Fight Stats</h3>         
+
+<div class="row text-center" style="display:flex; flex-wrap: wrap;">
+<table class="table table-striped">
+<thead>
+   <tr>
+      <th>Match Id</th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByTeamfights/start_time">Start Time
+         </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByTeamfights/end_time">End Time
+         </a></th>
+      <th><a href = "/matches_sorted/<%= players[0].match_id %>/sortByTeamfights/death">Death
+         </a></th>
+      <!--<th>Start Time</th>-->
+      <!--<th>End Time</th>-->
+      <!--<th>Death</th>-->
+   </tr>
+</thead>
+
+<tbody>
+   <% for (var i = 0; i < teamfights.length; /* I save the data in a variable 'quotation', I don't know how you named your variable  */  i++) { %>
+    <tr>
+    <th scope = 'row'>
+      <%= teamfights[i].match_id %>
+      </th>
+      <td><%= Math.floor(teamfights[i].start_time / 60) %> m 
+       <%= Math.floor(teamfights[i].start_time % 60) %> s 
+       </td>
+      <td><%= Math.floor(teamfights[i].end_time/ 60) %> m 
+       <%= Math.floor(teamfights[i].end_time % 60) %> s 
+       </td>
+      <td>
+          <%= teamfights[i].death %>
+      </td>
+ 
+    </tr>    
+   <% } %>
+</tbody>
+   
+</table>
+
+</div>
+
 
 <div class="well">
     <div class="text-right">

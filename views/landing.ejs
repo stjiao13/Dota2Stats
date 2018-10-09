@@ -2,10 +2,13 @@
 <h2>Landing Page</h2>
 
 <div style = 'text-align: center ;' class="container">
-<h3>Welcome!</h3>
-
-<a href = '/matches' style = '  font-size: 1em;'> 
-See recent matches</a>
+<h3>Welcome</h3>
+<p align="left" style="font-size:160%;">This site aims to be a good data analytic tool for dota2 players. 
+For now, you could find the recent matches and players in it and refer to the related purchase log and leave your comment in a match.</p>
+<p align="left" style="font-size:160%;">Currently, we have <%= matchesCount%> matches, <%= playersCount%> players,
+<%= teamfightsCount %> teamfights and <%= purchasesCount %> purchases recorded. </p>
+<a href = '/matches' style = '  font-size: 200%;'> 
+Begin by browsing recent matches</a>
 </div>
 
 <% include partials/footer %>
