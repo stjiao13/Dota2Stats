@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var bodyParser  = require("body-parser");
+var connection = require("./connection")
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname + "/public"));
@@ -9,7 +10,8 @@ app.set("view engine","ejs");
 
 
 const { Pool, Client } = require('pg')
-const connectionString = "postgres://qgoyzerrrddgkd:115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7@ec2-54-83-27-165.compute-1.amazonaws.com:5432/d7pgeu1vs3a7r";
+// const connectionString = "postgres://qgoyzerrrddgkd:115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7@ec2-54-83-27-165.compute-1.amazonaws.com:5432/d7pgeu1vs3a7r";
+const connectionString = connection.uri;
 const router = express.Router();
 const matches = [];
 var sort_status = [];
@@ -236,6 +238,6 @@ app.post("/matches/:id/comments/:commentId",function(req, res) {
 
 app.listen(process.env.PORT,process.env.IP,() =>{
     console.log("started");
-    console.log(process.env.HOST);
+    console.log(connection.host);
 });
 
