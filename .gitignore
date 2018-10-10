@@ -1,6 +1,6 @@
 /node_modules
 npm-debug.log
-; connection.js
-; /model/seedWithPwd.txt
+connection.js
+/model/seedWithPwd.txt
 .DS_Store
 /*.env
