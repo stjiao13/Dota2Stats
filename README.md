@@ -11,7 +11,7 @@ The project was primarily a Database Design project and the database have been n
 I have provided that code in the report.
 
 
-The URL of the project is: https://mighty-badlands-64864.herokuapp.com/matches/sort/byTower 
+The URL of the project is: https://mighty-badlands-64864.herokuapp.com/
 
 Tools/Frameworks/Languages used are:
 - Node.js
