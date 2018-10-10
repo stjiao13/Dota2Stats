@@ -3,13 +3,10 @@ The database seeding steps are :
 2) Import data from csv file use 'copy' command
 
 # cli commands for first step
-    psql -h MYHOST  -p MYPORT -d MYDATABASE -U MYUSERNAME -f SQLSCRIPT
+$ psql -h MYHOST  -p MYPORT -d MYDATABASE -U MYUSERNAME -f SQLSCRIPT
     
 The sql scripts are located sql_script folder
 
-
-# password
-115fc521e731b0eb673a50366b03e6bacd5d1cb2209f88d49d5d5011df8781b7
 
 # cli commands for importing data from csv file
 

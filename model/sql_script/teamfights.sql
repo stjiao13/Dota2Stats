@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS teamfights
 CREATE TABLE teamfights
 (
   match_id serial NOT NULL,

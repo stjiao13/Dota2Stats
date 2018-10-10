@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS matches
 CREATE TABLE matches
 (
   match_id serial NOT NULL,
@@ -12,4 +13,3 @@ CREATE TABLE matches
   radiant_win character varying(50),
   PRIMARY KEY (match_id)
 );
--- COPY persons(first_name,last_name) FROM '/demo/persons.csv' DELIMITER ',' CSV HEADER;

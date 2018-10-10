@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS purchase_log
 CREATE TABLE purchase_log
 (
   item_id serial NOT NULL,

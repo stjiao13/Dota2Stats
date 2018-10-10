@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS comments
 CREATE TABLE comments
 (
   id serial NOT NULL,

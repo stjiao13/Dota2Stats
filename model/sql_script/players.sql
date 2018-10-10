@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS players
-
 CREATE TABLE players
 (
   match_id serial NOT NULL,

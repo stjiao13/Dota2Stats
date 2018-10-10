@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS hero_name 
 CREATE TABLE hero_name 
 (
   hero_id serial NOT NULL,

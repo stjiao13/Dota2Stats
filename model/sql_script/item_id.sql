@@ -1,3 +1,4 @@
+DROP TABLE IF EXISTS item_id
 CREATE TABLE item_id
 (
   id serial NOT NULL,
