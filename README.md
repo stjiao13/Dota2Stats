@@ -303,3 +303,5 @@ References
 3.  B. (2018, October 03). Brianc/node-postgres. Retrieved from https://github.com/brianc/node-postgres
 
 
+## License
+[MIT license](https://github.com/dnc1994/MachineLearning-UW/blob/master/LICENSE)
