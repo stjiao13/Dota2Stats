@@ -171,19 +171,19 @@ Interface
 
 This is the home page of my web application and users could see how many records have been stored in this website. By clicking ’Begin by browsing recent matches’, user could enter the matches page.
 
-<img src="landing.png" alt="[fig:fig1]Landing page of Dota2 Stats" style="width:100.0%" />
+<img src="image/landing.png" alt="[fig:fig1]Landing page of Dota2 Stats" style="width:100.0%" />
 
 ### Matches Page
 
 In the matches page, recent dota2 matches are shown in table as shown below:
 
-<img src="matches.png" alt="[fig:fig2]Matches page of Dota2 Stats" style="width:100.0%" />
+<img src="image/matches.png" alt="[fig:fig2]Matches page of Dota2 Stats" style="width:100.0%" />
 
 By clicking the title of each column title, user may see the record in ascending or descending order like shown below:
 
-<img src="matches_sort_byDuration.png" alt="[fig:fig3]Matches page in ascending order of duration" style="width:100.0%" />
+<img src="image/matches_sort_byDuration.png" alt="[fig:fig3]Matches page in ascending order of duration" style="width:100.0%" />
 
-<img src="matches_sort_byDuration2.png" alt="[fig:fig4]Matches page in descending order of duration" style="width:100.0%" />
+<img src="image/matches_sort_byDuration2.png" alt="[fig:fig4]Matches page in descending order of duration" style="width:100.0%" />
 
 Besides, user may see the details of a specific match in the show page by clicking the match id.
 
@@ -191,31 +191,31 @@ Besides, user may see the details of a specific match in the show page by clicki
 
 The first table in the show page lists statistics about 10 players in this game. Also users could sort the data based on column titles as shown below:
 
-<img src="show.png" alt="[fig:fig5]Show page of player statistics" style="width:100.0%" />
+<img src="image/show.png" alt="[fig:fig5]Show page of player statistics" style="width:100.0%" />
 
-<img src="show_gold_sorted.png" alt="[fig:fig6]Show page of player statistics sorted by gold" style="width:100.0%" />
+<img src="image/show_gold_sorted.png" alt="[fig:fig6]Show page of player statistics sorted by gold" style="width:100.0%" />
 
 Moreover, by clicking the account id of any player, users can view the purchase log of this player in this match as shown below:
 
-<img src="purchase.png" alt="[fig:fig7]Show page of player statistics sorted by gold" style="width:100.0%" />
+<img src="image/purchase.png" alt="[fig:fig7]Show page of player statistics sorted by gold" style="width:100.0%" />
 
 The other table that users will see in this page is the table for teamfights statistics and users will also be able to sort this table based on column title in ascending or descending order.
 
-<img src="teeamfight.png" alt="[fig:fig8]Show page of player statistics" style="width:100.0%" />
+<img src="image/teeamfight.png" alt="[fig:fig8]Show page of player statistics" style="width:100.0%" />
 
 Users may leave a comment for this match at the end of page by clicking ’Add New Comment’ like shown below:
 
-<img src="add_comment2.png" alt="[fig:fig9]Comment section in show page" style="width:100.0%" />
+<img src="image/add_comment2.png" alt="[fig:fig9]Comment section in show page" style="width:100.0%" />
 
-<img src="comment_add.png" alt="[fig:fig10]Add new comment page" style="width:100.0%" />
+<img src="image/comment_add.png" alt="[fig:fig10]Add new comment page" style="width:100.0%" />
 
 After leaving a comment, users will be automatically directed to the original show page and see the comment he just submitted.
 
-<img src="comment1.png" alt="[fig:fig11]Add new comment page" style="width:100.0%" />
+<img src="image/comment1.png" alt="[fig:fig11]Add new comment page" style="width:100.0%" />
 
 Users may also delete or edit a comment by clicking the corresponding button. Users will be directed to an edit page if edit button is clicked as shown below:
 
-<img src="edit.png" alt="[fig:fig12]Edit page for an existing comment" style="width:100.0%" />
+<img src="image/edit.png" alt="[fig:fig12]Edit page for an existing comment" style="width:100.0%" />
 
 Once the edit is completed, users will also be redirected to the previous show page.
 
