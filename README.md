@@ -1,4 +1,4 @@
-## Dota2 Stats
+Dota2 Stats
 ===================
 
 The project was a part of the course CSCE 608 .
