@@ -62,7 +62,7 @@ Entity Relationship Diagram
 
 I created the entity relationship diagram (E-R diagram) using DbSchema. The E-R diagram is shown below and I will discuss later about each table in the diagram
 
-<img src="erd2.png" alt="Entity Relationship Diagram" style="width:100.0%" />
+<img src="image/erd2.png" alt="Entity Relationship Diagram" style="width:100.0%" />
 
 Matches
 -------
