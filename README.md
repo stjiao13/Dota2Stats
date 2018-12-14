@@ -1,4 +1,5 @@
 ## Dota2 Stats
+===================
 
 The project was a part of the course CSCE 608 .
 The project was primarily a Database Design project and the database have been normalised to Boyce–Codd normal form.
