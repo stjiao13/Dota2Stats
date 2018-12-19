@@ -25,28 +25,29 @@ const pool = new Pool({
   ssl: true,
 });
 // client.connect();
+const routes =  require("./routes/home");
+app.use('/', routes);
 
-
-// get route for landing page
-app.get("/",function(req,res) {
-    var prefix = 'SELECT COUNT(*) FROM ';
-    pool.query(prefix + 'matches;').then(matchesCount => {
-        pool.query(prefix + 'players;').then(playersCount => {
-            pool.query(prefix + 'teamfights;').then(teamfightsCount => {
-                pool.query(prefix + 'purchase_log;').then(purchasesCount => {
+// // get route for landing page
+// app.get("/",function(req,res) {
+//     var prefix = 'SELECT COUNT(*) FROM ';
+//     pool.query(prefix + 'matches;').then(matchesCount => {
+//         pool.query(prefix + 'players;').then(playersCount => {
+//             pool.query(prefix + 'teamfights;').then(teamfightsCount => {
+//                 pool.query(prefix + 'purchase_log;').then(purchasesCount => {
                     
-                    res.render("landing",{
-                        matchesCount : matchesCount.rows[0].count,
-                        playersCount : playersCount.rows[0].count,
-                        teamfightsCount : teamfightsCount.rows[0].count,
-                        purchasesCount : purchasesCount.rows[0].count
-                    });
+//                     res.render("landing",{
+//                         matchesCount : matchesCount.rows[0].count,
+//                         playersCount : playersCount.rows[0].count,
+//                         teamfightsCount : teamfightsCount.rows[0].count,
+//                         purchasesCount : purchasesCount.rows[0].count
+//                     });
 
-                })
-            })
-        })
-    }).catch(e => console.error(e.stack));
-});
+//                 })
+//             })
+//         })
+//     }).catch(e => console.error(e.stack));
+// });
 
 // get route for matches page
 app.get("/matches",function(req,res) {
