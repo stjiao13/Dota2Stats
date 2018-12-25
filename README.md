@@ -304,4 +304,4 @@ References
 
 
 ## License
-[MIT license](https://github.com/dnc1994/MachineLearning-UW/blob/master/LICENSE)
+[MIT license](https://github.com/stjiao13/Dota2Stats/blob/master/LICENSE)
